@@ -69,4 +69,17 @@ describe('Band and Musician Models', () => {
         });
         expect(destroyedMusicians).toBe(2);
     })
+
+    test('test for adding musicians to band', async () => {
+        const someBand = await Band.findByPk(1)
+
+        await someBand.addMusician(1)
+        await someBand.addMusician(2)
+        await someBand.addMusician(3)
+
+        bandMusicians = await someBand.getMusicians();
+
+        expect(bandMusicians.length).toBe(3);
+    })
+
 })
