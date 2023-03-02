@@ -119,4 +119,45 @@ describe('Band and Musician Models', () => {
         expect(songsInBands.length).toBe(2)
     })
 
+    test('eager loading test for band/musician', async () => {
+        const daBand = await Band.findAll({
+            include: [
+                {model: Musician} 
+            ]
+        })
+
+        //looping through the daBand finding amount of musicians
+        let counter = 0;
+        //loop through the band with musicians
+        for (let i = 0; i < daBand[0].musicians.length; i++){
+            //add +1 to counter with each musician loop
+            counter++;
+            //console.log(counter)
+        }
+
+        expect(counter).toBe(3) //expecting the counter to have 3 musicians (there are 3 musicians in my first band)
+        expect(daBand[0].musicians.length).toBe(3) //my first band with 3 musicians
+        expect(daBand[1].musicians.length).toBe(0) //my second band with 0 musicians
+    })
+
+
+    test('eager loading test for band/song', async () => {
+        const daBand2 = await Band.findAll({
+            include: [
+                {model: Song} 
+            ]
+        })
+
+        let counter = 0;
+        //loop through the band with songs
+        for (let i = 0; i < daBand2[1].songs.length; i++){
+            //add +1 to counter with each song loop
+            counter++;
+        }
+
+        expect(counter).toBe(3) //expecting the counter to have 3 songs (there are 3 songs in my second band)
+        expect(daBand2[0].songs.length).toBe(1) //my first band with 1 song
+        expect(daBand2[1].songs.length).toBe(3) //my second band with 3 songs
+    })
+    
 })

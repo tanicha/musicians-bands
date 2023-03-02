@@ -2,7 +2,7 @@ const {Band} = require('./Band')
 const {Musician} = require('./Musician');
 const {Song} = require('./Song');
 
-//defining associates
+//defining associations
 Musician.belongsTo(Band);
 Band.hasMany(Musician);
 
